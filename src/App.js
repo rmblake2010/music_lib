@@ -1,9 +1,12 @@
 import { useState, useRef} from 'react'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Gallery from './components/Gallery'
 import Searchbar from './components/Searchbar';
 import { DataContext } from './contexts/DataContext';
 import { SearchContext } from './contexts/SearchContext';
 import './App.css';
+import AlbumView from './components/AlbumView';
+import ArtistView from './components/ArtistView';
 
 function App() {
   //because other items will need to pass down data use states will be defined in 
@@ -50,19 +53,45 @@ function App() {
     setSearch(userInput);
   }
     
-  
-
   return (
-    <div className="App">
-      <SearchContext.Provider value={{term: searchInput, handleSearch}}>
-      <Searchbar handleSearch={handleSearch}/>
-      </SearchContext.Provider>
-      <h2>{message}</h2>
-      <DataContext.Provider value={data}>
-        <Gallery />
-      </DataContext.Provider>  
+    <div>
+    {message}
+        <Router>
+            <Routes>
+                <Route path="/" element={
+                    <Fragment>
+                        <Searchbar handleSearch = {handleSearch}/>
+                        <Gallery data={data} />
+                    </Fragment>
+                } />
+                <Route path="/album/:id" element={<AlbumView />} />
+                <Route path="/artist/:id" element={<ArtistView />} />
+            </Routes>
+        </Router>
     </div>
-  );
+  )
+
+
 }
 
 export default App;
+
+
+
+
+
+/*
+return (
+  <div className="App">
+    <SearchContext.Provider value={{term: searchInput, handleSearch}}>
+    <Searchbar handleSearch={handleSearch}/>
+    </SearchContext.Provider>
+    <h2>{message}</h2>
+    <DataContext.Provider value={data}>
+      <Gallery />
+    </DataContext.Provider>  
+    <AlbumView/>
+    <ArtistView/>
+  </div>
+);
+*/
