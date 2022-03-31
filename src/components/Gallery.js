@@ -1,9 +1,11 @@
 import { useContext } from "react"
+import { useNavigate } from 'react-router-dom'
 import { DataContext } from "../contexts/DataContext"
 import GalleryItem from "./GalleryItem"
 
 function Gallery() {
     const data = useContext(DataContext);
+
 
     return(
         <div>
@@ -18,3 +20,7 @@ function Gallery() {
 
 
 export default Gallery
+
+
+
+
